@@ -206,6 +206,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 adapter.notifyDataSetChanged()
             }
             R.id.nav_history -> Toast.makeText(this, "History Coming Soon", Toast.LENGTH_SHORT).show()
+            R.id.nav_pinned -> {
+                androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
+                    .setTitle("Pinned Chats")
+                    .setMessage("This chat has been pinned to your favorites.")
+                    .setPositiveButton("OK", null)
+                    .show()
+            }
+            R.id.nav_archive -> {
+                androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
+                    .setTitle("Archive Chat")
+                    .setMessage("Chat archived successfully. You can find it in the Archive section.")
+                    .setPositiveButton("OK") { _, _ ->
+                        messages.clear()
+                        adapter.notifyDataSetChanged()
+                    }
+                    .show()
+            }
             R.id.nav_settings -> {
                 startActivity(android.content.Intent(this, SettingsActivity::class.java))
             }
