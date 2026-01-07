@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
     }
 
     const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
-      model: 'openai/gpt-4o', // Using gpt-4o via OpenRouter
+      model: 'google/gemini-2.0-flash-exp:free', // Using free model via OpenRouter
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: message }
