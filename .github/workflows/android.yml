@@ -21,18 +21,18 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
-      run: chmod +x GenAIAgent/app/gradlew
-      continue-on-error: true
+      run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: |
-        cd GenAIAgent
-        ./gradlew build
-      continue-on-error: true
+      run: ./gradlew build
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     - name: Upload APK
       uses: actions/upload-artifact@v3
       with:
         name: app-debug
-        path: GenAIAgent/app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
       continue-on-error: true
