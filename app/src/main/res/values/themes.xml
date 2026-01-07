@@ -32,4 +32,10 @@
     <style name="CircleImageView" parent="">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="Theme.GenAI.Dialog" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowBackground">@drawable/bg_ios_dialog</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="colorSurface">#171717</item>
+    </style>
 </resources>
