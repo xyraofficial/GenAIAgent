@@ -2,5 +2,6 @@ package com.genai.app.data
 import com.genai.app.BuildConfig
 
 object OpenAIClient {
-    val API_KEY = if (BuildConfig.OPENAI_API_KEY.isEmpty()) "dummy_key" else BuildConfig.OPENAI_API_KEY
+    // Masukkan API Key OpenAI Anda di sini secara langsung
+    const val API_KEY = "MASUKKAN_OPENAI_API_KEY_ANDA_DI_SINI"
 }

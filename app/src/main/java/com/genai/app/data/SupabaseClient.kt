@@ -2,6 +2,7 @@ package com.genai.app.data
 import com.genai.app.BuildConfig
 
 object SupabaseClient {
-    val URL = if (BuildConfig.SUPABASE_URL.isNullOrEmpty()) "https://placeholder.supabase.co" else BuildConfig.SUPABASE_URL
-    val ANON_KEY = if (BuildConfig.SUPABASE_ANON_KEY.isNullOrEmpty()) "dummy_anon_key" else BuildConfig.SUPABASE_ANON_KEY
+    // Masukkan URL dan Anon Key Supabase Anda di sini secara langsung
+    const val URL = "MASUKKAN_SUPABASE_URL_ANDA_DI_SINI"
+    const val ANON_KEY = "MASUKKAN_SUPABASE_ANON_KEY_ANDA_DI_SINI"
 }
