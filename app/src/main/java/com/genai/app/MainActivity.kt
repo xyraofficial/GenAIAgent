@@ -2,6 +2,7 @@ package com.genai.app
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -56,8 +57,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val tvUserEmail = headerView?.findViewById<TextView>(R.id.tvUserEmail)
         
         val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
-        val userEmail = prefs.getString("user_email", "user@example.com")
-        tvUserEmail?.text = userEmail
+        val userEmailStr = prefs.getString("user_email", "user@example.com")
+        tvUserEmail?.text = userEmailStr
 
         if (toolbar != null) {
             val toggle = ActionBarDrawerToggle(
