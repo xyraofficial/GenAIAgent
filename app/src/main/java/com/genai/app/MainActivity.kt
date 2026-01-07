@@ -169,7 +169,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 FILE_PICK_CODE -> {
                     val fileUri = data.data
-                    Toast.makeText(this, "File selected: ${fileUri?.path}", Toast.LENGTH_SHORT).show()
+                    val fileName = fileUri?.path?.substringAfterLast('/') ?: "file"
+                    
+                    // Simulating file upload to chat
+                    val userMsg = Message("Uploaded file: $fileName", true)
+                    messages.add(userMsg)
+                    adapter.notifyItemInserted(messages.size - 1)
+                    findViewById<RecyclerView>(R.id.rvChat).scrollToPosition(messages.size - 1)
+                    
+                    // AI Response to file
+                    sendMessage("Saya telah mengunggah file $fileName. Bisa tolong dianalisis?")
                 }
             }
         }

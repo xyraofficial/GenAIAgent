@@ -32,12 +32,35 @@ class SettingsActivity : AppCompatActivity() {
             text = prefs.getString("user_email", "user@example.com")
         }
 
-        // Add dummy listeners for other settings
-        findViewById<LinearLayout>(R.id.llMainLanguage)?.setOnClickListener {
-            Toast.makeText(this, "Language selection coming soon", Toast.LENGTH_SHORT).show()
+        // Implementation for other settings
+        findViewById<android.view.View>(R.id.llMainLanguage)?.setOnClickListener {
+            val languages = arrayOf("English", "Indonesian", "Spanish", "French")
+            androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
+                .setTitle("Select Language")
+                .setItems(languages) { _, which ->
+                    val selected = languages[which]
+                    prefs.edit().putString("app_language", selected).apply()
+                    android.widget.Toast.makeText(this, "Language set to $selected", android.widget.Toast.LENGTH_SHORT).show()
+                }
+                .show()
         }
-        findViewById<LinearLayout>(R.id.llSubscription)?.setOnClickListener {
-            Toast.makeText(this, "Subscription management coming soon", Toast.LENGTH_SHORT).show()
+
+        findViewById<android.view.View>(R.id.llHaptic)?.setOnClickListener {
+            val isEnabled = prefs.getBoolean("haptic_enabled", true)
+            prefs.edit().putBoolean("haptic_enabled", !isEnabled).apply()
+            val status = if (!isEnabled) "Enabled" else "Disabled"
+            android.widget.Toast.makeText(this, "Haptic Feedback $status", android.widget.Toast.LENGTH_SHORT).show()
+        }
+
+        findViewById<android.view.View>(R.id.llSubscription)?.setOnClickListener {
+            androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
+                .setTitle("Subscription")
+                .setMessage("You are currently on the Free Plan. Upgrade to Pro for unlimited messages?")
+                .setPositiveButton("Upgrade") { _, _ ->
+                    android.widget.Toast.makeText(this, "Redirecting to payment...", android.widget.Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("Later", null)
+                .show()
         }
     }
 }
