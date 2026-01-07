@@ -184,19 +184,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-        adapter = ChatAdapter(messages)
-        rvChat.layoutManager = LinearLayoutManager(this)
-        rvChat.adapter = adapter
-
-        btnSend.setOnClickListener {
-            val text = etMessage.text.toString()
-            if (text.isNotEmpty()) {
-                sendMessage(text)
-                etMessage.text.clear()
-            }
-        }
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_new_chat -> {
@@ -206,6 +193,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_history -> Toast.makeText(this, "History Coming Soon", Toast.LENGTH_SHORT).show()
             R.id.nav_settings -> {
                 startActivity(android.content.Intent(this, SettingsActivity::class.java))
+            }
+            R.id.nav_clear_chat -> {
+                androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
+                    .setTitle("Clear Chat")
+                    .setMessage("Are you sure you want to delete all messages?")
+                    .setPositiveButton("Clear") { _, _ ->
+                        messages.clear()
+                        adapter.notifyDataSetChanged()
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+            }
+            R.id.nav_about -> {
+                androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
+                    .setTitle("About GenAI Agent")
+                    .setMessage("GenAI Agent v1.0\n\nYour advanced AI companion powered by OpenAI.")
+                    .setPositiveButton("OK", null)
+                    .show()
+            }
+            R.id.nav_logout -> {
+                val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+                prefs.edit().clear().apply()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
