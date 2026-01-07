@@ -30,10 +30,6 @@ author = "agent"
 task = "workflow.run"
 args = "Info Proyek"
 
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Backend Proxy Server"
-
 [[workflows.workflow]]
 name = "Info Proyek"
 author = "agent"
@@ -44,18 +40,6 @@ outputType = "console"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "echo \"Proyek Android: Aplikasi ini diatur untuk build otomatis menggunakan GitHub Actions. Setiap perubahan pada branch 'main' akan memicu pembuatan file APK baru yang dapat diunduh di tab 'Actions' pada repositori GitHub Anda.\" && tail -f /dev/null"
-
-[[workflows.workflow]]
-name = "Backend Proxy Server"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "node -e \"const express = require('express'); const app = express(); app.use(express.json()); app.post('/api/chat', require('./api/chat.js')); app.listen(5000, '0.0.0.0', () => console.log('Backend Proxy Server running on port 5000'));\""
-waitForPort = 5000
-
-[workflows.workflow.metadata]
-outputType = "webview"
 
 [agent]
 expertMode = true
