@@ -18,6 +18,10 @@
         <!-- Fix potential crashes with Material components -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <!-- Material3 Compatibility -->
+        <item name="colorPrimaryContainer">#171717</item>
+        <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
     <!-- App theme for settings activity -->
