@@ -54,7 +54,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         
         val headerView = navigationView?.getHeaderView(0)
         val tvUserEmail = headerView?.findViewById<TextView>(R.id.tvUserEmail)
-        tvUserEmail?.text = "user@example.com" // Update from session if available
+        
+        val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+        val userEmail = prefs.getString("user_email", "user@example.com")
+        tvUserEmail?.text = userEmail
 
         if (toolbar != null) {
             val toggle = ActionBarDrawerToggle(

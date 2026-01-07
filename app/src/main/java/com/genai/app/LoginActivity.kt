@@ -74,6 +74,13 @@ class LoginActivity : AppCompatActivity() {
                 
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
+                        val responseJson = JSONObject(responseBody ?: "{}")
+                        val userJson = responseJson.optJSONObject("user")
+                        val email = userJson?.optString("email") ?: ""
+                        
+                        val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+                        prefs.edit().putString("user_email", email).apply()
+
                         Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
