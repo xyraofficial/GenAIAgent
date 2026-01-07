@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
     const response = await axios({
       method: req.method,
       url: `${supabaseUrl}/auth/v1/${path}`,
+      params: req.query, // Meneruskan grant_type=password
       data: req.body,
       headers: {
         'apikey': supabaseKey,

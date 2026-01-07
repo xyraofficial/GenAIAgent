@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(email: String, password: String) {
-        // Path is passed as query param for the proxy
+        // Path is passed as query param untuk proxy
         val url = "${SupabaseClient.BASE_URL}?path=token&grant_type=password"
         val json = JSONObject().apply {
             put("email", email)
