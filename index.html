@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenAI Agent - Status Backend</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #171717;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 { font-size: 1.5rem; margin-bottom: 1.5rem; color: #ECECF1; }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            background: #2D2D2D;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+        .label { color: #9A9A9E; }
+        .status { font-weight: bold; }
+        .success { color: #10a37f; }
+        .error { color: #ef4444; }
+        .info { color: #007AFF; }
+        .footer { margin-top: 1.5rem; font-size: 0.8rem; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GenAI Agent Dashboard</h1>
+        
+        <div class="status-item">
+            <span class="label">Backend Status</span>
+            <span class="status success">Online</span>
+        </div>
+        
+        <div id="openai-status" class="status-item">
+            <span class="label">OpenAI API</span>
+            <span class="status info">Checking...</span>
+        </div>
+        
+        <div id="supabase-status" class="status-item">
+            <span class="label">Supabase API</span>
+            <span class="status info">Checking...</span>
+        </div>
+
+        <div class="footer">
+            Arsitektur Proxy Backend Aktif
+        </div>
+    </div>
+
+    <script>
+        async function checkStatus() {
+            // Check OpenAI
+            try {
+                const res = await fetch('/api/chat', { 
+                    method: 'POST', 
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message: 'ping'}) 
+                });
+                const data = await res.json();
+                const el = document.getElementById('openai-status').querySelector('.status');
+                if (data.error && data.error.includes('OpenAI')) {
+                    el.innerText = 'Error (Check Key)';
+                    el.className = 'status error';
+                } else {
+                    el.innerText = 'Ready';
+                    el.className = 'status success';
+                }
+            } catch (e) {
+                const el = document.getElementById('openai-status').querySelector('.status');
+                el.innerText = 'Offline';
+                el.className = 'status error';
+            }
+
+            // Check Supabase
+            try {
+                const res = await fetch('/api/auth?path=health');
+                const el = document.getElementById('supabase-status').querySelector('.status');
+                if (res.ok) {
+                    el.innerText = 'Ready';
+                    el.className = 'status success';
+                } else {
+                    el.innerText = 'Error';
+                    el.className = 'status error';
+                }
+            } catch (e) {
+                const el = document.getElementById('supabase-status').querySelector('.status');
+                el.innerText = 'Offline';
+                el.className = 'status error';
+            }
+        }
+        checkStatus();
+    </script>
+</body>
+</html>
