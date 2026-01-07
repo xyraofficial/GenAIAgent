@@ -6,9 +6,7 @@
     </style>
 
     <!-- iOS Style Notification/Toast replacement -->
-    <style name="Widget.App.Notification.iOS" parent="androidx.cardview.widget.CardView">
-        <item name="cardCornerRadius">18dp</item>
-        <item name="cardBackgroundColor">#CC000000</item>
-        <item name="cardElevation">8dp</item>
+    <style name="Widget.App.Notification.iOS" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_ios_input</item>
     </style>
 </resources>
