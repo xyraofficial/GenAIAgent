@@ -4,7 +4,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B0B0B">
+    android:background="#000000">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0B0B0B"
+            android:background="#000000"
             app:elevation="0dp">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -109,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#171717"
+        android:background="#000000"
         app:itemTextColor="#ECECF1"
         app:itemIconTint="#ECECF1"
         app:headerLayout="@layout/nav_header_chat"
