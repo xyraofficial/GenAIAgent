@@ -1,41 +1,41 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.GenAIAgent" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- ChatGPT Ultra-Dark AMOLED inspired colors -->
-        <item name="colorPrimary">#FFFFFF</item>
-        <item name="colorOnPrimary">#000000</item>
-        <item name="android:windowBackground">#000000</item> <!-- True Black -->
-        <item name="android:navigationBarColor">#000000</item>
-        <item name="android:statusBarColor">#000000</item>
-        <item name="android:windowLightStatusBar">false</item>
+    <style name="Theme.GenAIAgent" parent="Theme.Material3.Light.NoActionBar">
+        <!-- iOS Light Smooth Theme -->
+        <item name="colorPrimary">#007AFF</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:windowBackground">#F2F2F7</item> <!-- iOS System Gray 6 -->
+        <item name="android:navigationBarColor">#F2F2F7</item>
+        <item name="android:statusBarColor">#F2F2F7</item>
+        <item name="android:windowLightStatusBar">true</item>
         
-        <item name="colorSurface">#000000</item>
-        <item name="colorOnSurface">#FFFFFF</item>
-        <item name="colorSurfaceVariant">#171717</item>
-        <item name="colorOnSurfaceVariant">#ECECF1</item>
-        <item name="colorOutline">#2D2D2D</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#000000</item>
+        <item name="colorSurfaceVariant">#E9E9EB</item>
+        <item name="colorOnSurfaceVariant">#000000</item>
+        <item name="colorOutline">#C6C6C8</item>
 
         <!-- Fix potential crashes with Material components -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
         <!-- Material3 Compatibility -->
-        <item name="colorPrimaryContainer">#171717</item>
-        <item name="colorOnPrimaryContainer">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#E9E9EB</item>
+        <item name="colorOnPrimaryContainer">#000000</item>
     </style>
 
     <!-- App theme for settings activity -->
     <style name="Theme.GenAIAgent.Settings" parent="Theme.GenAIAgent">
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="CircleImageView" parent="">
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="Theme.GenAI.Dialog" parent="Theme.Material3.DayNight.Dialog">
-        <item name="android:windowBackground">@drawable/bg_ios_dialog</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="colorSurface">#171717</item>
+    <style name="Theme.GenAI.Dialog" parent="Theme.Material3.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:textColor">#000000</item>
+        <item name="colorSurface">#FFFFFF</item>
     </style>
 </resources>

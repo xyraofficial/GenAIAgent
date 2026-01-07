@@ -27,8 +27,11 @@ module.exports = async (req, res) => {
   }
 
   try {
+    if (!apiKey) {
+      return res.status(500).json({ error: 'OpenAI API Key is not configured in environment variables' });
+    }
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-      model: 'gpt-4o', // Menggunakan model yang lebih kuat untuk 'browsing' dan 'vision'
+      model: 'gpt-4o',
       messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message }
@@ -37,12 +40,21 @@ module.exports = async (req, res) => {
       headers: {
           'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json'
-      }
+      },
+      timeout: 30000 // 30 seconds timeout
     });
 
-    res.status(200).json(response.data);
+    if (response.data && response.data.choices && response.data.choices.length > 0) {
+      res.status(200).json(response.data);
+    } else {
+      res.status(500).json({ error: 'Empty response from OpenAI' });
+    }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to fetch from OpenAI' });
+    console.error('OpenAI Error:', error.response ? error.response.data : error.message);
+    const statusCode = error.response ? error.response.status : 500;
+    res.status(statusCode).json({ 
+      error: 'Failed to fetch from OpenAI', 
+      details: error.response ? error.response.data : error.message 
+    });
   }
 };
