@@ -1,0 +1,15 @@
+<resources>
+    <!-- iOS Style Dialog -->
+    <style name="Theme.App.Dialog.iOS" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowBackground">@drawable/bg_ios_dialog</item>
+        <item name="android:windowCornerRadius">14dp</item>
+        <item name="colorAccent">#007AFF</item>
+    </style>
+
+    <!-- iOS Style Notification/Toast replacement -->
+    <style name="Widget.App.Notification.iOS" parent="Widget.Material3.CardView">
+        <item name="cardCornerRadius">18dp</item>
+        <item name="cardBackgroundColor">#CC000000</item>
+        <item name="cardElevation">8dp</item>
+    </style>
+</resources>
