@@ -47,7 +47,30 @@ class ChatAdapter(private val messages: List<Message>) : RecyclerView.Adapter<Ch
             holder.llActions?.visibility = if (!message.isUser) View.VISIBLE else View.GONE
         }
         
-        holder.btnCopy?.setOnClickListener { /* Copy logic */ }
+        holder.btnCopy?.setOnClickListener {
+            val clipboard = holder.itemView.context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+            val clip = android.content.ClipData.newPlainText("AI Response", message.content)
+            clipboard.setPrimaryClip(clip)
+            android.widget.Toast.makeText(holder.itemView.context, "Copied to clipboard", android.widget.Toast.LENGTH_SHORT).show()
+        }
+
+        holder.btnShare?.setOnClickListener {
+            val intent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(android.content.Intent.EXTRA_TEXT, message.content)
+            }
+            holder.itemView.context.startActivity(android.content.Intent.createChooser(intent, "Share via"))
+        }
+
+        holder.btnLike?.setOnClickListener {
+            holder.btnLike.setColorFilter(android.graphics.Color.parseColor("#10a37f"))
+            holder.btnDislike?.clearColorFilter()
+        }
+
+        holder.btnDislike?.setOnClickListener {
+            holder.btnDislike.setColorFilter(android.graphics.Color.parseColor("#ef4444"))
+            holder.btnLike?.clearColorFilter()
+        }
     }
 
     override fun getItemCount() = messages.size

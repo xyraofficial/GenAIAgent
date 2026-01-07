@@ -130,6 +130,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         adapter = ChatAdapter(messages)
         rvChat.layoutManager = LinearLayoutManager(this)
         rvChat.adapter = adapter
+        
+        // Load history
+        val savedHistory = prefs.getString("chat_history", null)
+        if (savedHistory != null) {
+            val jsonArray = JSONArray(savedHistory)
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+                messages.add(Message(
+                    content = obj.getString("content"),
+                    isUser = obj.getBoolean("isUser")
+                ))
+            }
+            adapter.notifyDataSetChanged()
+            rvChat.scrollToPosition(messages.size - 1)
+        }
 
         btnSend.setOnClickListener {
             val text = etMessage.text.toString()
@@ -201,6 +216,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .setPositiveButton("Clear") { _, _ ->
                         messages.clear()
                         adapter.notifyDataSetChanged()
+                        getSharedPreferences("genai_prefs", MODE_PRIVATE).edit().remove("chat_history").apply()
                     }
                     .setNegativeButton("Cancel", null)
                     .show()
@@ -229,6 +245,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } else {
             onBackPressedDispatcher.onBackPressed()
         }
+    }
+
+    private fun saveHistory() {
+        val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+        val jsonArray = JSONArray()
+        messages.forEach { msg ->
+            if (!msg.isThinking) {
+                val obj = JSONObject().apply {
+                    put("content", msg.content)
+                    put("isUser", msg.isUser)
+                }
+                jsonArray.put(obj)
+            }
+        }
+        prefs.edit().putString("chat_history", jsonArray.toString()).apply()
     }
 
     private fun sendMessage(text: String) {
@@ -274,7 +305,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         aiMsg.isThinking = false
                         aiMsg.content = aiResponse
                         adapter.notifyItemChanged(messages.size - 1)
-                        findViewById<RecyclerView>(R.id.rvChat).scrollToPosition(messages.size - 1)
+                        findViewById<RecyclerView>(R.id.rvChat).smoothScrollToPosition(messages.size - 1)
+                        
+                        // Save history
+                        saveHistory()
                     } else {
                         messages.removeAt(messages.size - 1)
                         adapter.notifyDataSetChanged()
