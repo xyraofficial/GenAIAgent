@@ -1,11 +1,14 @@
 package com.genai.app
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.genai.app.data.SupabaseClient
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +56,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(email: String, password: String) {
+        val progress = findViewById<CircularProgressIndicator>(R.id.loginProgress)
+        progress?.visibility = View.VISIBLE
+        
         // Path is passed as query param untuk proxy
         val url = "${SupabaseClient.BASE_URL}?path=token&grant_type=password"
         val json = JSONObject().apply {
@@ -73,13 +79,17 @@ class LoginActivity : AppCompatActivity() {
                 val responseBody = response.body?.string()
                 
                 withContext(Dispatchers.Main) {
+                    progress?.visibility = View.GONE
                     if (response.isSuccessful) {
                         val responseJson = JSONObject(responseBody ?: "{}")
                         val userJson = responseJson.optJSONObject("user")
                         val email = userJson?.optString("email") ?: ""
                         
                         val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
-                        prefs.edit().putString("user_email", email).apply()
+                        prefs.edit()
+                            .putString("user_email", email)
+                            .putBoolean("is_logged_in", true)
+                            .apply()
 
                         Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
@@ -91,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    progress?.visibility = View.GONE
                     Toast.makeText(this@LoginActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }

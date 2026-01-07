@@ -1,11 +1,13 @@
 package com.genai.app
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.genai.app.data.SupabaseClient
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,6 +51,9 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register(email: String, password: String) {
+        val progress = findViewById<CircularProgressIndicator>(R.id.registerProgress)
+        progress?.visibility = View.VISIBLE
+        
         // Path is passed as query param for the proxy
         val url = "${SupabaseClient.BASE_URL}?path=signup"
         val json = JSONObject().apply {
@@ -69,6 +74,7 @@ class RegisterActivity : AppCompatActivity() {
                 val responseBody = response.body?.string()
                 
                 withContext(Dispatchers.Main) {
+                    progress?.visibility = View.GONE
                     if (response.isSuccessful) {
                         Toast.makeText(this@RegisterActivity, "Registration Successful. Please check your email.", Toast.LENGTH_LONG).show()
                         finish()
@@ -79,6 +85,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    progress?.visibility = View.GONE
                     Toast.makeText(this@RegisterActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
