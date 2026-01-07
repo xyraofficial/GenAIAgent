@@ -8,12 +8,13 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#F2F2F7">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000"
+            android:background="#F2F2F7"
             app:elevation="0dp">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -21,9 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@android:drawable/ic_menu_sort_by_size"
-                app:title="ChatGPT"
+                app:title="GenAI"
                 app:titleCentered="true"
-                app:titleTextColor="#FFFFFF" />
+                app:titleTextColor="#000000" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,7 +75,7 @@
                         android:background="@android:color/transparent"
                         android:hint="Message"
                         android:textColorHint="#9A9A9E"
-                        android:textColor="#FFFFFF"
+                        android:textColor="#000000"
                         android:padding="12dp"
                         android:maxLines="5"
                         android:textSize="16sp" />
@@ -110,9 +111,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#000000"
-        app:itemTextColor="#ECECF1"
-        app:itemIconTint="#ECECF1"
+        android:background="#FFFFFF"
+        app:itemTextColor="#000000"
+        app:itemIconTint="#000000"
         app:headerLayout="@layout/nav_header_chat"
         app:menu="@menu/nav_menu_chat" />
 

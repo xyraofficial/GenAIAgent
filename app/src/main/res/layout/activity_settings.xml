@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B0B0B">
+    android:background="#F2F2F7">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="Settings"
-        app:titleTextColor="#FFFFFF"
+        app:titleTextColor="#000000"
         app:navigationIcon="@android:drawable/ic_menu_revert"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +38,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#171717"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="12dp"
                 app:strokeWidth="0dp">
 
@@ -53,12 +53,12 @@
                         android:layout_height="wrap_content"
                         android:padding="16dp"
                         android:text="Email"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#000000" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#333333" />
+                        android:background="#E5E5EA" />
 
                     <LinearLayout
                         android:id="@+id/llSubscription"
@@ -73,7 +73,7 @@
                             android:layout_height="wrap_content"
                             android:padding="16dp"
                             android:text="Subscription"
-                            android:textColor="#FFFFFF" />
+                            android:textColor="#000000" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -91,7 +91,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#171717"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="12dp"
                 app:strokeWidth="0dp">
 
@@ -114,13 +114,13 @@
                             android:layout_height="wrap_content"
                             android:padding="16dp"
                             android:text="AI Persona: Default"
-                            android:textColor="#FFFFFF" />
+                            android:textColor="#000000" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#333333" />
+                        android:background="#E5E5EA" />
 
                     <LinearLayout
                         android:id="@+id/llWebSearch"
@@ -134,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Web Search Support"
-                            android:textColor="#FFFFFF" />
+                            android:textColor="#000000" />
                         <com.google.android.material.switchmaterial.SwitchMaterial
                             android:id="@+id/switchWebSearch"
                             android:layout_width="wrap_content"
@@ -156,7 +156,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#171717"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="12dp"
                 app:strokeWidth="0dp">
 
@@ -178,13 +178,13 @@
                             android:layout_height="wrap_content"
                             android:padding="16dp"
                             android:text="Main Language"
-                            android:textColor="#FFFFFF" />
+                            android:textColor="#000000" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#333333" />
+                        android:background="#E5E5EA" />
 
                     <LinearLayout
                         android:id="@+id/llHaptic"
@@ -199,7 +199,7 @@
                             android:layout_height="wrap_content"
                             android:padding="16dp"
                             android:text="Haptic Feedback"
-                            android:textColor="#FFFFFF" />
+                            android:textColor="#000000" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
