@@ -51,6 +51,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout = findViewById(R.id.drawerLayout)
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
         navigationView?.setNavigationItemSelectedListener(this)
+        
+        val headerView = navigationView?.getHeaderView(0)
+        val tvUserEmail = headerView?.findViewById<TextView>(R.id.tvUserEmail)
+        tvUserEmail?.text = "user@example.com" // Update from session if available
 
         if (toolbar != null) {
             val toggle = ActionBarDrawerToggle(
