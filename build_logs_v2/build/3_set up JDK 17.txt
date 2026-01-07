@@ -1,0 +1,36 @@
+﻿2026-01-07T13:56:27.1347682Z ##[group]Run actions/setup-java@v4
+2026-01-07T13:56:27.1348690Z with:
+2026-01-07T13:56:27.1349376Z   java-version: 17
+2026-01-07T13:56:27.1350136Z   distribution: temurin
+2026-01-07T13:56:27.1350931Z   cache: gradle
+2026-01-07T13:56:27.1351658Z   java-package: jdk
+2026-01-07T13:56:27.1352420Z   check-latest: false
+2026-01-07T13:56:27.1353214Z   server-id: github
+2026-01-07T13:56:27.1353997Z   server-username: GITHUB_ACTOR
+2026-01-07T13:56:27.1355122Z   server-password: GITHUB_TOKEN
+2026-01-07T13:56:27.1356023Z   overwrite-settings: true
+2026-01-07T13:56:27.1356871Z   job-status: success
+2026-01-07T13:56:27.1358048Z   token: ***
+2026-01-07T13:56:27.1358758Z ##[endgroup]
+2026-01-07T13:56:27.3405276Z ##[group]Installed distributions
+2026-01-07T13:56:27.3475831Z Resolved Java 17.0.17+10 from tool-cache
+2026-01-07T13:56:27.3477061Z Setting Java 17.0.17+10 as the default
+2026-01-07T13:56:27.3489414Z Creating toolchains.xml for JDK version 17 from temurin
+2026-01-07T13:56:27.3565801Z Writing to /home/runner/.m2/toolchains.xml
+2026-01-07T13:56:27.3566858Z 
+2026-01-07T13:56:27.3567752Z Java configuration:
+2026-01-07T13:56:27.3569141Z   Distribution: temurin
+2026-01-07T13:56:27.3570345Z   Version: 17.0.17+10
+2026-01-07T13:56:27.3571777Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2026-01-07T13:56:27.3573046Z 
+2026-01-07T13:56:27.3574104Z ##[endgroup]
+2026-01-07T13:56:27.3588929Z Creating settings.xml with server-id: github
+2026-01-07T13:56:27.3590575Z Writing to /home/runner/.m2/settings.xml
+2026-01-07T13:56:27.5715970Z Cache hit for: setup-java-Linux-x64-gradle-2e14734e25957f6a3c838beb40d58a9f9e2c761f9b14ee549753200bac25dca4
+2026-01-07T13:56:28.7768410Z Received 134217728 of 413608090 (32.5%), 118.8 MBs/sec
+2026-01-07T13:56:29.7778809Z Received 310378496 of 413608090 (75.0%), 142.4 MBs/sec
+2026-01-07T13:56:30.4900907Z Received 413608090 of 413608090 (100.0%), 141.3 MBs/sec
+2026-01-07T13:56:30.4902977Z Cache Size: ~394 MB (413608090 B)
+2026-01-07T13:56:30.5038116Z [command]/usr/bin/tar -xf /home/runner/work/_temp/e45e3ea2-5cf3-445f-a096-765c0d3c3839/cache.tzst -P -C /home/runner/work/GenAIAgent/GenAIAgent --use-compress-program unzstd
+2026-01-07T13:56:31.9418164Z Cache restored successfully
+2026-01-07T13:56:32.0263490Z Cache restored from key: setup-java-Linux-x64-gradle-2e14734e25957f6a3c838beb40d58a9f9e2c761f9b14ee549753200bac25dca4

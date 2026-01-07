@@ -1,0 +1,72 @@
+﻿2026-01-07T13:56:26.5072795Z ##[group]Run actions/checkout@v4
+2026-01-07T13:56:26.5074130Z with:
+2026-01-07T13:56:26.5074939Z   repository: xyraofficial/GenAIAgent
+2026-01-07T13:56:26.5076245Z   token: ***
+2026-01-07T13:56:26.5076993Z   ssh-strict: true
+2026-01-07T13:56:26.5077930Z   ssh-user: git
+2026-01-07T13:56:26.5078736Z   persist-credentials: true
+2026-01-07T13:56:26.5079628Z   clean: true
+2026-01-07T13:56:26.5080430Z   sparse-checkout-cone-mode: true
+2026-01-07T13:56:26.5081398Z   fetch-depth: 1
+2026-01-07T13:56:26.5082159Z   fetch-tags: false
+2026-01-07T13:56:26.5082979Z   show-progress: true
+2026-01-07T13:56:26.5083781Z   lfs: false
+2026-01-07T13:56:26.5084524Z   submodules: false
+2026-01-07T13:56:26.5085378Z   set-safe-directory: true
+2026-01-07T13:56:26.5086507Z ##[endgroup]
+2026-01-07T13:56:26.6186706Z Syncing repository: xyraofficial/GenAIAgent
+2026-01-07T13:56:26.6189687Z ##[group]Getting Git version info
+2026-01-07T13:56:26.6191064Z Working directory is '/home/runner/work/GenAIAgent/GenAIAgent'
+2026-01-07T13:56:26.6193166Z [command]/usr/bin/git version
+2026-01-07T13:56:26.6272764Z git version 2.52.0
+2026-01-07T13:56:26.6299977Z ##[endgroup]
+2026-01-07T13:56:26.6321438Z Temporarily overriding HOME='/home/runner/work/_temp/1de75654-e79a-4aab-9832-6b73da0b1923' before making global git config changes
+2026-01-07T13:56:26.6324382Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-07T13:56:26.6326995Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/GenAIAgent/GenAIAgent
+2026-01-07T13:56:26.6367178Z Deleting the contents of '/home/runner/work/GenAIAgent/GenAIAgent'
+2026-01-07T13:56:26.6371011Z ##[group]Initializing the repository
+2026-01-07T13:56:26.6375934Z [command]/usr/bin/git init /home/runner/work/GenAIAgent/GenAIAgent
+2026-01-07T13:56:26.6516119Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-01-07T13:56:26.6518311Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-01-07T13:56:26.6520988Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-01-07T13:56:26.6523000Z hint: call:
+2026-01-07T13:56:26.6524260Z hint:
+2026-01-07T13:56:26.6526165Z hint: 	git config --global init.defaultBranch <name>
+2026-01-07T13:56:26.6528370Z hint:
+2026-01-07T13:56:26.6530186Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-01-07T13:56:26.6533283Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-01-07T13:56:26.6535800Z hint:
+2026-01-07T13:56:26.6537028Z hint: 	git branch -m <name>
+2026-01-07T13:56:26.6538644Z hint:
+2026-01-07T13:56:26.6540506Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-01-07T13:56:26.6542535Z Initialized empty Git repository in /home/runner/work/GenAIAgent/GenAIAgent/.git/
+2026-01-07T13:56:26.6545840Z [command]/usr/bin/git remote add origin https://github.com/xyraofficial/GenAIAgent
+2026-01-07T13:56:26.6571127Z ##[endgroup]
+2026-01-07T13:56:26.6573516Z ##[group]Disabling automatic garbage collection
+2026-01-07T13:56:26.6575724Z [command]/usr/bin/git config --local gc.auto 0
+2026-01-07T13:56:26.6605273Z ##[endgroup]
+2026-01-07T13:56:26.6607720Z ##[group]Setting up auth
+2026-01-07T13:56:26.6612731Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-07T13:56:26.6645404Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-07T13:56:26.7007760Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-07T13:56:26.7036808Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-07T13:56:26.7257223Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-07T13:56:26.7290037Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-07T13:56:26.7514953Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-01-07T13:56:26.7549377Z ##[endgroup]
+2026-01-07T13:56:26.7550739Z ##[group]Fetching the repository
+2026-01-07T13:56:26.7558179Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a8b7b01dc4fbd9e39345a4736aeaa2d707fa7e62:refs/remotes/origin/main
+2026-01-07T13:56:27.0709690Z From https://github.com/xyraofficial/GenAIAgent
+2026-01-07T13:56:27.0712318Z  * [new ref]         a8b7b01dc4fbd9e39345a4736aeaa2d707fa7e62 -> origin/main
+2026-01-07T13:56:27.0746404Z ##[endgroup]
+2026-01-07T13:56:27.0748353Z ##[group]Determining the checkout info
+2026-01-07T13:56:27.0749932Z ##[endgroup]
+2026-01-07T13:56:27.0752889Z [command]/usr/bin/git sparse-checkout disable
+2026-01-07T13:56:27.0795580Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-01-07T13:56:27.0822190Z ##[group]Checking out the ref
+2026-01-07T13:56:27.0825909Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-01-07T13:56:27.0946966Z Switched to a new branch 'main'
+2026-01-07T13:56:27.0949670Z branch 'main' set up to track 'origin/main'.
+2026-01-07T13:56:27.0956648Z ##[endgroup]
+2026-01-07T13:56:27.0990560Z [command]/usr/bin/git log -1 --format=%H
+2026-01-07T13:56:27.1013824Z a8b7b01dc4fbd9e39345a4736aeaa2d707fa7e62
