@@ -35,18 +35,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_chat)
 
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        if (toolbar != null) {
+            setSupportActionBar(toolbar)
+        }
 
         drawerLayout = findViewById(R.id.drawerLayout)
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
-        navigationView.setNavigationItemSelectedListener(this)
+        navigationView?.setNavigationItemSelectedListener(this)
 
-        val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+        if (toolbar != null && drawerLayout != null) {
+            val toggle = ActionBarDrawerToggle(
+                this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            )
+            drawerLayout.addDrawerListener(toggle)
+            toggle.syncState()
+        }
 
         val rvChat = findViewById<RecyclerView>(R.id.rvChat)
         val etMessage = findViewById<EditText>(R.id.etMessage)
