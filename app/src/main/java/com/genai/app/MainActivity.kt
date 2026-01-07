@@ -105,20 +105,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         messages.add(Message(text, true))
         adapter.notifyItemInserted(messages.size - 1)
         
-        val url = "https://api.openai.com/v1/chat/completions"
+        val url = OpenAIClient.BASE_URL
         val json = JSONObject().apply {
-            put("model", "gpt-4o-mini")
-            put("messages", JSONArray().put(JSONObject().apply {
-                put("role", "user")
-                put("content", text)
-            }))
+            put("message", text)
         }.toString()
 
         val body = json.toRequestBody("application/json".toMediaType())
         val request = Request.Builder()
             .url(url)
             .post(body)
-            .addHeader("Authorization", "Bearer ${OpenAIClient.API_KEY}")
             .build()
 
         CoroutineScope(Dispatchers.IO).launch {
