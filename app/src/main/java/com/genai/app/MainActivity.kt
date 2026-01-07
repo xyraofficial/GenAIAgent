@@ -26,7 +26,40 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.view.MenuItem
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.genai.app.data.Message
+import com.genai.app.data.OpenAIClient
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
+import org.json.JSONObject
+import java.util.Locale
+
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private val SPEECH_REQUEST_CODE = 100
+    private val FILE_PICK_CODE = 101
     private val client = OkHttpClient()
     private val messages = mutableListOf<Message>()
     private lateinit var adapter: ChatAdapter
@@ -67,8 +100,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val headerView = navigationView?.getHeaderView(0)
         val tvUserEmail = headerView?.findViewById<TextView>(R.id.tvUserEmail)
         
-        val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
-        val userEmailStrVal = prefs.getString("user_email", "user@example.com")
+        val prefs_ = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+        val userEmailStrVal = prefs_.getString("user_email", "user@example.com")
         tvUserEmail?.text = userEmailStrVal
 
         if (toolbar != null) {
@@ -87,12 +120,60 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val btnUpload = findViewById<ImageView>(R.id.btnUpload)
 
         btnVoice?.setOnClickListener {
-            Toast.makeText(this, "Voice Input Coming Soon", Toast.LENGTH_SHORT).show()
+            startVoiceInput()
         }
 
         btnUpload?.setOnClickListener {
-            Toast.makeText(this, "File Upload Coming Soon", Toast.LENGTH_SHORT).show()
+            startFilePicker()
         }
+
+        adapter = ChatAdapter(messages)
+        rvChat.layoutManager = LinearLayoutManager(this)
+        rvChat.adapter = adapter
+
+        btnSend.setOnClickListener {
+            val text = etMessage.text.toString()
+            if (text.isNotEmpty()) {
+                sendMessage(text)
+                etMessage.text.clear()
+            }
+        }
+    }
+
+    private fun startVoiceInput() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something...")
+        try {
+            startActivityForResult(intent, SPEECH_REQUEST_CODE)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Voice input not supported", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun startFilePicker() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        startActivityForResult(intent, FILE_PICK_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            when (requestCode) {
+                SPEECH_REQUEST_CODE -> {
+                    val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    val spokenText = result?.get(0) ?: ""
+                    findViewById<EditText>(R.id.etMessage)?.setText(spokenText)
+                }
+                FILE_PICK_CODE -> {
+                    val fileUri = data.data
+                    Toast.makeText(this, "File selected: ${fileUri?.path}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
         adapter = ChatAdapter(messages)
         rvChat.layoutManager = LinearLayoutManager(this)

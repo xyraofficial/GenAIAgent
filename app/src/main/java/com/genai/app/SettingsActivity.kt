@@ -26,5 +26,20 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        findViewById<TextView>(R.id.tvUserEmail)?.apply {
+            val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+            text = prefs.getString("user_email", "user@example.com")
+        }
+
+        // Add dummy listeners for other settings
+        findViewById<LinearLayout>(R.id.llMainLanguage)?.setOnClickListener {
+            Toast.makeText(this, "Language selection coming soon", Toast.LENGTH_SHORT).show()
+        }
+        findViewById<LinearLayout>(R.id.llSubscription)?.setOnClickListener {
+            Toast.makeText(this, "Subscription management coming soon", Toast.LENGTH_SHORT).show()
+        }
     }
 }
+
+// Add these IDs to activity_settings.xml or use findViewByParent logic if IDs are missing
