@@ -2,7 +2,6 @@
     <!-- iOS Style Dialog -->
     <style name="Theme.App.Dialog.iOS" parent="Theme.Material3.DayNight.Dialog">
         <item name="android:windowBackground">@drawable/bg_ios_dialog</item>
-        <item name="android:windowCornerRadius">14dp</item>
         <item name="colorAccent">#007AFF</item>
     </style>
 
