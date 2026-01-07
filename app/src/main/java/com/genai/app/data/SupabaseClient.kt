@@ -1,5 +1,4 @@
 package com.genai.app.data
-import com.genai.app.BuildConfig
 
 object SupabaseClient {
     // URL proxy backend untuk Supabase

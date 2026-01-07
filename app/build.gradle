@@ -12,9 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "SUPABASE_URL", "\"${System.getenv('SUPABASE_URL') ?: ''}\""
-        buildConfigField "String", "SUPABASE_ANON_KEY", "\"${System.getenv('SUPABASE_ANON_KEY') ?: ''}\""
-        buildConfigField "String", "OPENAI_API_KEY", "\"${System.getenv('OPENAI_API_KEY') ?: ''}\""
+        // Env vars are handled by Vercel proxy now
     }
 
     buildTypes {
