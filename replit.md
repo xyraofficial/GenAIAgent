@@ -35,4 +35,5 @@ Preferred communication style: Simple, everyday language.
 - **Android**: Native Android platform target
 - **Material You**: Dynamic theming system integration
 
+### Jaggan Jalankan Build Apk Di Replit, Replit Tidak Build Menjad Apk
 *Note: This is currently a design specification. Implementation will require Android SDK, Kotlin/Java, and appropriate AI service integrations.*
