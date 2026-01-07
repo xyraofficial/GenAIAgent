@@ -207,21 +207,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_history -> Toast.makeText(this, "History Coming Soon", Toast.LENGTH_SHORT).show()
             R.id.nav_pinned -> {
-                androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
-                    .setTitle("Pinned Chats")
-                    .setMessage("This chat has been pinned to your favorites.")
-                    .setPositiveButton("OK", null)
-                    .show()
+                val isPinned = prefs.getBoolean("is_pinned", false)
+                prefs.edit().putBoolean("is_pinned", !isPinned).apply()
+                val msg = if (!isPinned) "Chat pinned to favorites" else "Chat unpinned"
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             }
             R.id.nav_archive -> {
-                androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
-                    .setTitle("Archive Chat")
-                    .setMessage("Chat archived successfully. You can find it in the Archive section.")
-                    .setPositiveButton("OK") { _, _ ->
-                        messages.clear()
-                        adapter.notifyDataSetChanged()
-                    }
-                    .show()
+                val isArchived = prefs.getBoolean("is_archived", false)
+                prefs.edit().putBoolean("is_archived", !isArchived).apply()
+                if (!isArchived) {
+                    messages.clear()
+                    adapter.notifyDataSetChanged()
+                    Toast.makeText(this, "Chat moved to Archive", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Chat restored from Archive", Toast.LENGTH_SHORT).show()
+                }
             }
             R.id.nav_settings -> {
                 startActivity(android.content.Intent(this, SettingsActivity::class.java))
