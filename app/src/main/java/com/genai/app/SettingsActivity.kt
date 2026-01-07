@@ -24,8 +24,8 @@ class SettingsActivity : AppCompatActivity() {
 
         val btnLogout = findViewById<Button>(R.id.btnLogout)
         btnLogout.setOnClickListener {
-            val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
-            prefs.edit().clear().apply()
+            val logoutPrefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+            logoutPrefs.edit().clear().apply()
             
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -59,8 +59,8 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.tvUserEmail)?.apply {
-            val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
-            text = prefs.getString("user_email", "user@example.com")
+            val emailPrefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+            text = emailPrefs.getString("user_email", "user@example.com")
         }
 
         // Implementation for other settings

@@ -83,11 +83,11 @@ class LoginActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val responseJson = JSONObject(responseBody ?: "{}")
                         val userJson = responseJson.optJSONObject("user")
-                        val email = userJson?.optString("email") ?: ""
+                        val userEmail = userJson?.optString("email") ?: ""
                         
-                        val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
-                        prefs.edit()
-                            .putString("user_email", email)
+                        val sharedPrefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+                        sharedPrefs.edit()
+                            .putString("user_email", userEmail)
                             .putBoolean("is_logged_in", true)
                             .apply()
 

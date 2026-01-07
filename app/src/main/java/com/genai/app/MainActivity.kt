@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -32,18 +33,40 @@ import org.json.JSONObject
 import java.util.Locale
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private val SPEECH_REQUEST_CODE = 100
-    private val FILE_PICK_CODE = 101
     private val client = OkHttpClient()
     private val messages = mutableListOf<Message>()
     private lateinit var adapter: ChatAdapter
     private lateinit var drawerLayout: DrawerLayout
 
+    private val speechLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val spokenText = results?.get(0) ?: ""
+            findViewById<EditText>(R.id.etMessage)?.setText(spokenText)
+        }
+    }
+
+    private val filePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            val fileUri = data?.data
+            val fileName = fileUri?.path?.substringAfterLast('/') ?: "file"
+            
+            val userMsg = Message("Analyzing image: $fileName", true)
+            messages.add(userMsg)
+            adapter.notifyItemInserted(messages.size - 1)
+            findViewById<RecyclerView>(R.id.rvChat).scrollToPosition(messages.size - 1)
+            
+            sendMessage("Saya telah mengunggah gambar $fileName. Tolong baca teks di dalamnya dan jelaskan isinya.")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
-        val isLoggedIn = prefs.getBoolean("is_logged_in", false)
+        val mainPrefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+        val isLoggedIn = mainPrefs.getBoolean("is_logged_in", false)
         
         if (!isLoggedIn) {
             startActivity(Intent(this, LoginActivity::class.java))
@@ -55,7 +78,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setContentView(R.layout.activity_chat)
         } catch (e: Exception) {
             e.printStackTrace()
-            // Fallback or log if needed
         }
 
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
@@ -74,9 +96,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val headerView = navigationView?.getHeaderView(0)
         val tvUserEmail = headerView?.findViewById<TextView>(R.id.tvUserEmail)
         
-        val prefs_ = getSharedPreferences("genai_prefs", MODE_PRIVATE)
-        val userEmailStrVal = prefs_.getString("user_email", "user@example.com")
-        tvUserEmail?.text = userEmailStrVal
+        val emailValue = mainPrefs.getString("user_email", "user@example.com")
+        tvUserEmail?.text = emailValue
 
         if (toolbar != null) {
             val toggle = ActionBarDrawerToggle(
@@ -105,8 +126,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         rvChat.layoutManager = LinearLayoutManager(this)
         rvChat.adapter = adapter
         
-        // Load history
-        val savedHistory = prefs.getString("chat_history", null)
+        val savedHistory = mainPrefs.getString("chat_history", null)
         if (savedHistory != null) {
             val jsonArray = JSONArray(savedHistory)
             for (i in 0 until jsonArray.length()) {
@@ -135,7 +155,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something...")
         try {
-            startActivityForResult(intent, SPEECH_REQUEST_CODE)
+            speechLauncher.launch(intent)
         } catch (e: Exception) {
             Toast.makeText(this, "Voice input not supported", Toast.LENGTH_SHORT).show()
         }
@@ -144,37 +164,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun startFilePicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "*/*"
-        startActivityForResult(intent, FILE_PICK_CODE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            when (requestCode) {
-                SPEECH_REQUEST_CODE -> {
-                    val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                    val spokenText = result?.get(0) ?: ""
-                    findViewById<EditText>(R.id.etMessage)?.setText(spokenText)
-                }
-                FILE_PICK_CODE -> {
-                    val fileUri = data.data
-                    val fileName = fileUri?.path?.substringAfterLast('/') ?: "file"
-                    
-                    // Simulating file content for AI (Real OCR would happen here or in backend)
-                    val userMsg = Message("Analyzing image: $fileName", true)
-                    messages.add(userMsg)
-                    adapter.notifyItemInserted(messages.size - 1)
-                    findViewById<RecyclerView>(R.id.rvChat).scrollToPosition(messages.size - 1)
-                    
-                    // Using GPT-4o's native vision capability by describing the action
-                    sendMessage("Saya telah mengunggah gambar $fileName. Tolong baca teks di dalamnya dan jelaskan isinya.")
-                }
-            }
-        }
+        filePickerLauncher.launch(intent)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+        val navPrefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
         when (item.itemId) {
             R.id.nav_new_chat -> {
                 messages.clear()
@@ -182,14 +176,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_history -> Toast.makeText(this, "History Coming Soon", Toast.LENGTH_SHORT).show()
             R.id.nav_pinned -> {
-                val isPinned = prefs.getBoolean("is_pinned", false)
-                prefs.edit().putBoolean("is_pinned", !isPinned).apply()
+                val isPinned = navPrefs.getBoolean("is_pinned", false)
+                navPrefs.edit().putBoolean("is_pinned", !isPinned).apply()
                 val msg = if (!isPinned) "Chat pinned to favorites" else "Chat unpinned"
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             }
             R.id.nav_archive -> {
-                val isArchived = prefs.getBoolean("is_archived", false)
-                prefs.edit().putBoolean("is_archived", !isArchived).apply()
+                val isArchived = navPrefs.getBoolean("is_archived", false)
+                navPrefs.edit().putBoolean("is_archived", !isArchived).apply()
                 if (!isArchived) {
                     messages.clear()
                     adapter.notifyDataSetChanged()
@@ -199,7 +193,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             R.id.nav_settings -> {
-                startActivity(android.content.Intent(this, SettingsActivity::class.java))
+                startActivity(Intent(this, SettingsActivity::class.java))
             }
             R.id.nav_clear_chat -> {
                 androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
@@ -221,8 +215,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .show()
             }
             R.id.nav_logout -> {
-                val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
-                prefs.edit().clear().apply()
+                val logoutPrefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+                logoutPrefs.edit().clear().apply()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
@@ -240,7 +234,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun saveHistory() {
-        val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
+        val historyPrefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
         val jsonArray = JSONArray()
         messages.forEach { msg ->
             if (!msg.isThinking) {
@@ -251,7 +245,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 jsonArray.put(obj)
             }
         }
-        prefs.edit().putString("chat_history", jsonArray.toString()).apply()
+        historyPrefs.edit().putString("chat_history", jsonArray.toString()).apply()
     }
 
     private fun sendMessage(text: String) {
@@ -280,7 +274,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Update status animation
                 withContext(Dispatchers.Main) {
                     aiMsg.statusText = "Analyzing..."
                     adapter.notifyItemChanged(messages.size - 1)
@@ -302,7 +295,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         adapter.notifyItemChanged(messages.size - 1)
                         findViewById<RecyclerView>(R.id.rvChat).smoothScrollToPosition(messages.size - 1)
                         
-                        // Save history
                         saveHistory()
                     } else {
                         messages.removeAt(messages.size - 1)
