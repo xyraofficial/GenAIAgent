@@ -14,6 +14,10 @@
         <item name="colorSurfaceVariant">#171717</item>
         <item name="colorOnSurfaceVariant">#ECECF1</item>
         <item name="colorOutline">#2D2D2D</item>
+
+        <!-- Fix potential crashes with Material components -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!-- App theme for settings activity -->

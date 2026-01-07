@@ -32,11 +32,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
+        try {
+            setContentView(R.layout.activity_chat)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Fallback or log if needed
+        }
 
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         if (toolbar != null) {
-            setSupportActionBar(toolbar)
+            try {
+                setSupportActionBar(toolbar)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
         drawerLayout = findViewById(R.id.drawerLayout)
