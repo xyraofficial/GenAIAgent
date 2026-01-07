@@ -275,6 +275,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val url = OpenAIClient.BASE_URL
         val json = JSONObject().apply {
             put("message", text)
+            val persona = getSharedPreferences("genai_prefs", MODE_PRIVATE).getString("ai_persona", "Default")
+            put("persona", persona)
+            put("web_search", getSharedPreferences("genai_prefs", MODE_PRIVATE).getBoolean("web_search_enabled", false))
         }.toString()
 
         val body = json.toRequestBody("application/json".toMediaType())

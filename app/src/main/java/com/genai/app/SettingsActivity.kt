@@ -31,6 +31,31 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
+        // AI Persona Selection
+        findViewById<View>(R.id.llAIPersona)?.setOnClickListener {
+            val personas = arrayOf("Default", "Friendly Assistant", "Professional Expert", "Coding Mentor")
+            androidx.appcompat.app.AlertDialog.Builder(this, R.style.Theme_GenAI_Dialog)
+                .setTitle("Select AI Persona")
+                .setItems(personas) { _, which ->
+                    val selected = personas[which]
+                    prefs.edit().putString("ai_persona", selected).apply()
+                    findViewById<TextView>(R.id.tvCurrentPersona)?.text = "AI Persona: $selected"
+                    Toast.makeText(this, "Persona set to $selected", Toast.LENGTH_SHORT).show()
+                }
+                .show()
+        }
+
+        findViewById<TextView>(R.id.tvCurrentPersona)?.text = "AI Persona: ${prefs.getString("ai_persona", "Default")}"
+
+        // Web Search Toggle
+        val switchWebSearch = findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.switchWebSearch)
+        switchWebSearch?.isChecked = prefs.getBoolean("web_search_enabled", false)
+        switchWebSearch?.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("web_search_enabled", isChecked).apply()
+            val status = if (isChecked) "Enabled" else "Disabled"
+            Toast.makeText(this, "Web Search $status", Toast.LENGTH_SHORT).show()
+        }
+
         findViewById<TextView>(R.id.tvUserEmail)?.apply {
             val prefs = getSharedPreferences("genai_prefs", MODE_PRIVATE)
             text = prefs.getString("user_email", "user@example.com")
