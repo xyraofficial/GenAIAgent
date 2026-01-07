@@ -3,37 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp"
     android:gravity="top">
     
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:src="@android:drawable/ic_menu_info_details"
-        android:layout_marginEnd="12dp"
-        android:background="@android:color/darker_gray"
-        android:padding="4dp" />
+        android:layout_marginTop="2dp"
+        android:padding="4dp"
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        android:background="#10A37F" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ChatGPT"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp"/>
-
-        <TextView
-            android:id="@+id/tvMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#D1D1D6"
-            android:textSize="16sp"
-            android:lineSpacingExtra="4dp"/>
-    </LinearLayout>
+        android:layout_marginStart="12dp"
+        android:textColor="#ECECF1"
+        android:textSize="16sp"
+        android:lineSpacingExtra="4dp"/>
 </LinearLayout>

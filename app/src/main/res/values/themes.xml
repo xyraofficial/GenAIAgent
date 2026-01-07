@@ -1,17 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.GenAIAgent" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- ChatGPT Dark Mode inspired colors -->
+        <!-- ChatGPT Ultra-Dark inspired colors -->
         <item name="colorPrimary">#FFFFFF</item>
         <item name="colorOnPrimary">#000000</item>
-        <item name="android:windowBackground">#343541</item> <!-- Dark Sidebar Gray -->
-        <item name="android:navigationBarColor">#343541</item>
-        <item name="android:statusBarColor">#343541</item>
+        <item name="android:windowBackground">#0B0B0B</item>
+        <item name="android:navigationBarColor">#0B0B0B</item>
+        <item name="android:statusBarColor">#0B0B0B</item>
         <item name="android:windowLightStatusBar">false</item>
         
-        <item name="colorSurface">#444654</item> <!-- Main Content Gray -->
+        <item name="colorSurface">#171717</item>
         <item name="colorOnSurface">#FFFFFF</item>
-        <item name="colorSurfaceVariant">#40414F</item>
+        <item name="colorSurfaceVariant">#212121</item>
         <item name="colorOnSurfaceVariant">#ECECF1</item>
+    </style>
+
+    <style name="CircleImageView" parent="">
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

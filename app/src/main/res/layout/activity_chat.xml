@@ -4,7 +4,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#343541">
+    android:background="#0B0B0B">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#343541"
+            android:background="#0B0B0B"
             app:elevation="0dp">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:clipToPadding="false"
-                android:paddingBottom="80dp"
+                android:paddingBottom="100dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -44,35 +44,59 @@
                 android:id="@+id/inputArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
+                android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <EditText
-                    android:id="@+id/etMessage"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/llInput"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_chat_input"
-                    android:hint="Message"
-                    android:textColorHint="#9A9A9E"
-                    android:textColor="#FFFFFF"
-                    android:padding="12dp"
-                    android:maxLines="5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btnSend"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="8dp"/>
+                    android:background="@drawable/bg_chat_input_v2"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnSend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fabCustomSize="40dp"
-                    app:elevation="0dp"
-                    app:srcCompat="@android:drawable/ic_menu_send"
-                    app:tint="#343541"
-                    app:backgroundTint="#FFFFFF" 
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="8dp"
+                        android:src="@android:drawable/ic_menu_add"
+                        app:tint="#9A9A9E" />
+
+                    <EditText
+                        android:id="@+id/etMessage"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="Message"
+                        android:textColorHint="#9A9A9E"
+                        android:textColor="#FFFFFF"
+                        android:padding="12dp"
+                        android:maxLines="5"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/btnVoice"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="8dp"
+                        android:src="@android:drawable/ic_btn_speak_now"
+                        app:tint="#9A9A9E" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/btnSend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:fabCustomSize="36dp"
+                        app:elevation="0dp"
+                        app:srcCompat="@android:drawable/ic_menu_send"
+                        app:tint="#000000"
+                        app:backgroundTint="#FFFFFF"
+                        android:layout_margin="4dp"/>
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -85,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#202123"
+        android:background="#171717"
         app:itemTextColor="#ECECF1"
         app:itemIconTint="#ECECF1"
         app:headerLayout="@layout/nav_header_chat"
