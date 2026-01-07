@@ -1,6 +1,6 @@
 package com.genai.app.data
 
 object OpenAIClient {
-    // Memperbaiki URL: Menambahkan 's' pada 'genai' agar sesuai dengan sub-domain Vercel yang benar
-    const val BASE_URL = "https://genai-agent.vercel.app/api/chat"
+    // Kembali menggunakan URL Vercel dengan tanda hubung sesuai hasil pengecekan HTTP 200
+    const val BASE_URL = "https://gen-ai-agent.vercel.app/api/chat"
 }
