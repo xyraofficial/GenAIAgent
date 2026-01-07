@@ -64,6 +64,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val rvChat = findViewById<RecyclerView>(R.id.rvChat)
         val etMessage = findViewById<EditText>(R.id.etMessage)
         val btnSend = findViewById<FloatingActionButton>(R.id.btnSend)
+        val btnVoice = findViewById<ImageView>(R.id.btnVoice)
+        val btnUpload = findViewById<ImageView>(R.id.btnUpload)
+
+        btnVoice?.setOnClickListener {
+            Toast.makeText(this, "Voice Input Coming Soon", Toast.LENGTH_SHORT).show()
+        }
+
+        btnUpload?.setOnClickListener {
+            Toast.makeText(this, "File Upload Coming Soon", Toast.LENGTH_SHORT).show()
+        }
 
         adapter = ChatAdapter(messages)
         rvChat.layoutManager = LinearLayoutManager(this)
@@ -102,8 +112,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun sendMessage(text: String) {
-        messages.add(Message(text, true))
+        val userMsg = Message(text, true)
+        messages.add(userMsg)
         adapter.notifyItemInserted(messages.size - 1)
+        
+        val aiMsg = Message(isThinking = true, statusText = "Thinking...")
+        messages.add(aiMsg)
+        adapter.notifyItemInserted(messages.size - 1)
+        findViewById<RecyclerView>(R.id.rvChat).scrollToPosition(messages.size - 1)
         
         val url = OpenAIClient.BASE_URL
         val json = JSONObject().apply {
@@ -118,6 +134,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                // Update status animation
+                withContext(Dispatchers.Main) {
+                    aiMsg.statusText = "Analyzing..."
+                    adapter.notifyItemChanged(messages.size - 1)
+                }
+
                 val response = client.newCall(request).execute()
                 val responseBody = response.body?.string()
                 
@@ -129,15 +151,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             .getJSONObject("message")
                             .getString("content")
                         
-                        messages.add(Message(aiResponse, false))
-                        adapter.notifyItemInserted(messages.size - 1)
+                        aiMsg.isThinking = false
+                        aiMsg.content = aiResponse
+                        adapter.notifyItemChanged(messages.size - 1)
                         findViewById<RecyclerView>(R.id.rvChat).scrollToPosition(messages.size - 1)
                     } else {
+                        messages.removeAt(messages.size - 1)
+                        adapter.notifyDataSetChanged()
                         Toast.makeText(this@MainActivity, "AI Error: ${response.code}", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    messages.removeAt(messages.size - 1)
+                    adapter.notifyDataSetChanged()
                     Toast.makeText(this@MainActivity, "Network Error", Toast.LENGTH_SHORT).show()
                 }
             }

@@ -59,6 +59,7 @@
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <ImageView
+                        android:id="@+id/btnUpload"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_margin="8dp"
