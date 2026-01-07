@@ -14,9 +14,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".RegisterActivity" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="false" />
+        <activity android:name=".ChatActivity" android:exported="false" />
+        <activity android:name=".SettingsActivity" android:exported="false" />
     </application>
 </manifest>
