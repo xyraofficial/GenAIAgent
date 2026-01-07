@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
     }
 
     const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
-      model: 'deepseek/deepseek-r1:free', // Using DeepSeek R1 free model via OpenRouter
+      model: 'deepseek/deepseek-r1', // Menggunakan model standar r1 yang lebih stabil di OpenRouter
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: message }
