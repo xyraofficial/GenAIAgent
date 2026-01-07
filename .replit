@@ -34,12 +34,12 @@ args = "Info Proyek"
 name = "Info Proyek"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "echo \"Proyek Android: Gunakan Android Studio untuk menjalankan aplikasi ini. File sumber tersedia di direktori app/src.\" && tail -f /dev/null"
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "echo \"Proyek Android: Aplikasi ini diatur untuk build otomatis menggunakan GitHub Actions. Setiap perubahan pada branch 'main' akan memicu pembuatan file APK baru yang dapat diunduh di tab 'Actions' pada repositori GitHub Anda.\" && tail -f /dev/null"
 
 [agent]
 expertMode = true
