@@ -1,29 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.GenAIAgent" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">#6750A4</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#EADDFF</item>
-        <item name="colorOnPrimaryContainer">#21005D</item>
+        <!-- ChatGPT Dark Mode inspired colors -->
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorOnPrimary">#000000</item>
+        <item name="android:windowBackground">#343541</item> <!-- Dark Sidebar Gray -->
+        <item name="android:navigationBarColor">#343541</item>
+        <item name="android:statusBarColor">#343541</item>
+        <item name="android:windowLightStatusBar">false</item>
         
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">#625B71</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorSecondaryContainer">#E8DEF8</item>
-        <item name="colorOnSecondaryContainer">#1D192B</item>
-        
-        <!-- Tertiary brand color. -->
-        <item name="colorTertiary">#7D5260</item>
-        <item name="colorOnTertiary">#FFFFFF</item>
-        <item name="colorTertiaryContainer">#FFD8E4</item>
-        <item name="colorOnTertiaryContainer">#31111D</item>
-
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorSurface</item>
-        <item name="android:windowLightStatusBar">true</item>
-        
-        <!-- Activity transitions -->
-        <item name="android:windowActivityTransitions">true</item>
+        <item name="colorSurface">#444654</item> <!-- Main Content Gray -->
+        <item name="colorOnSurface">#FFFFFF</item>
+        <item name="colorSurfaceVariant">#40414F</item>
+        <item name="colorOnSurfaceVariant">#ECECF1</item>
     </style>
 </resources>
