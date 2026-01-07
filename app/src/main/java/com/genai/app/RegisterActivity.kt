@@ -49,7 +49,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register(email: String, password: String) {
-        val url = "${SupabaseClient.URL}/auth/v1/signup"
+        // Path is passed as query param for the proxy
+        val url = "${SupabaseClient.BASE_URL}?path=signup"
         val json = JSONObject().apply {
             put("email", email)
             put("password", password)
@@ -59,7 +60,6 @@ class RegisterActivity : AppCompatActivity() {
         val request = Request.Builder()
             .url(url)
             .post(body)
-            .addHeader("apikey", SupabaseClient.ANON_KEY)
             .addHeader("Content-Type", "application/json")
             .build()
 
