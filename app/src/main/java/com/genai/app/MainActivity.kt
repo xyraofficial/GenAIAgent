@@ -72,7 +72,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 adapter.notifyDataSetChanged()
             }
             R.id.nav_history -> Toast.makeText(this, "History Coming Soon", Toast.LENGTH_SHORT).show()
-            R.id.nav_settings -> Toast.makeText(this, "Settings Coming Soon", Toast.LENGTH_SHORT).show()
+            R.id.nav_settings -> {
+                startActivity(android.content.Intent(this, SettingsActivity::class.java))
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         
         val url = "https://api.openai.com/v1/chat/completions"
         val json = JSONObject().apply {
-            put("model", "gpt-3.5-turbo")
+            put("model", "gpt-4o-mini")
             put("messages", JSONArray().put(JSONObject().apply {
                 put("role", "user")
                 put("content", text)
