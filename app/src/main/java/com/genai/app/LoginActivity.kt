@@ -21,16 +21,20 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        try {
+            setContentView(R.layout.activity_login)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnToRegister = findViewById<Button>(R.id.btnToRegister)
 
-        btnLogin.setOnClickListener {
-            val email = etEmail.text.toString()
-            val password = etPassword.text.toString()
+        btnLogin?.setOnClickListener {
+            val email = etEmail?.text?.toString() ?: ""
+            val password = etPassword?.text?.toString() ?: ""
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 login(email, password)
@@ -39,8 +43,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        btnToRegister.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+        btnToRegister?.setOnClickListener {
+            try {
+                startActivity(Intent(this, RegisterActivity::class.java))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
