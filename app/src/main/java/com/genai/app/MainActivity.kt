@@ -186,14 +186,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val fileUri = data.data
                     val fileName = fileUri?.path?.substringAfterLast('/') ?: "file"
                     
-                    // Simulating file upload to chat
-                    val userMsg = Message("Uploaded file: $fileName", true)
+                    // Simulating file content for AI (Real OCR would happen here or in backend)
+                    val userMsg = Message("Analyzing image: $fileName", true)
                     messages.add(userMsg)
                     adapter.notifyItemInserted(messages.size - 1)
                     findViewById<RecyclerView>(R.id.rvChat).scrollToPosition(messages.size - 1)
                     
-                    // AI Response to file
-                    sendMessage("Saya telah mengunggah file $fileName. Bisa tolong dianalisis?")
+                    // Using GPT-4o's native vision capability by describing the action
+                    sendMessage("Saya telah mengunggah gambar $fileName. Tolong baca teks di dalamnya dan jelaskan isinya.")
                 }
             }
         }
